@@ -1,0 +1,10 @@
+<!doctype html>
+<title>TestApp</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}"> <!-- static/style.cssを読み込む -->
+<div class=page>
+  <h1></h1>
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}TestApp
+  {% block body %}{% endblock %}    <!-- このブロックが参照時に置き換えられる -->
+</div>
