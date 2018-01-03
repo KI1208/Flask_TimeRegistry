@@ -1,11 +1,10 @@
 # 概要
-FlaskとMongoDBの組み合わせをテストするための簡易アプリケーション。  
-ユーザの名前と誕生日を登録していくだけ。  
+Flaskを使用して、自分の仕事内容を記録するアプリケーションを作成する。 
 
 # 想定の環境
-メイン環境: Windows10
+メイン環境: Windows10(Python: 3.6.4)
 MongoDB用コンテナ環境: DockerToolbox(17.10.0-ce)
-Python: 3.6.4
+
 
 # 前提条件
 1. MongoDBを別途用意する。  
@@ -31,6 +30,7 @@ mongo = PyMongo(app, config_prefix='MONGO')
 # 使い方
 
 1. git clone <URL>
-2. python testapp.py
+2. pip install -r requirements.txt
+2. python timerecord.py
 3. ブラウザでhttp://localhost:5000にアクセス
 
