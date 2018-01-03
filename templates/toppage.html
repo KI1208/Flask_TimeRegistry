@@ -1,5 +1,6 @@
 {% extends "layout.html" %}    <!-- これで元になるHTML(laytout.html)を指定 -->
 {% block body %}    <!-- layout.htmlのbodyというブロックを以下で置き換える -->
+  <a href="{{ url_for('show_project') }}">Add new Project</a>
   <form action="{{ url_for('change_date') }}" method=post class=add-entry>
       <dl>
         <dt>Date:
@@ -12,8 +13,25 @@
       <dl class=gray02>
           {% for entry in entries %}
           <dt>{{ entry.time.strftime("%H:%M") }}</dt>
-          <dd>Worktype: <input type="text" name="worktype[]" placeholder={{ entry.worktype }} ><input type="hidden" name="_id[]" value={{ entry._id }}></dd>
-          <dd>Comment:  <input type="text" size=50 name="comment[]" placeholder={{ entry.comment }} ></dd>
+          <!--<dd>Worktype: <input type="text" name="worktype[]" placeholder={{ entry.worktype }} ></dd>-->
+          <dd>Worktype:
+              <select name="worktype[]">
+                  <option value='' selected>{{ entry.worktype }}</option>
+                  {% for worktype in worktypes %}
+                      <option value={{ worktype }}>{{ worktype }}</option>
+                  {% endfor %}
+              </select>
+          </dd>
+          <dd>Project Name:
+              <select name="projectname[]">
+                  <option value='' selected>{{ entry.projectname }}</option>
+                  {% for project in projects %}
+                  <option value={{ project.projectname }}>{{ project.projectname }}</option>
+                  {% endfor %}
+              </select>
+          </dd>
+          <dd>Comment:  <input type="text" size=50 name="comment[]" placeholder={{ entry.comment }} >
+              <input type="hidden" name="_id[]" value={{ entry._id }}></dd>
           {% else %}
           <dt>No entries.</dt>
           <dd>Please add some entries.</dd>
@@ -21,12 +39,4 @@
       </dl>
       <input type=submit value=Update>
   </form>
-
-  <!--<ul>-->
-  <!--{% for entry in entries %}-->
-    <!--<li><h2>{{ entry.time }}</h2>{{ entry.worktype }}-->
-  <!--{% else %}-->
-    <!--<li><em>No entries.</em>-->
-  <!--{% endfor %}-->
-  <!--</ul>-->
 {% endblock %}

@@ -1,0 +1,41 @@
+{% extends "layout.html" %}    <!-- これで元になるHTML(laytout.html)を指定 -->
+{% block body %}    <!-- layout.htmlのbodyというブロックを以下で置き換える -->
+    <a href="{{ url_for('show_entry') }}">Return TopPage</a>
+    <form action="{{ url_for('add_project') }}" method=post class=add-entry>
+        <dl>
+            <dt>New Project Info:
+            <dd>Project name: <input type="text" name=projectname>
+            <dd>Project ID:   <input type="text" name=projectid placeholder="PS-XXXXXX">
+            <dd>Description:  <input type="text" name=projectdesc>
+            <dd>Status: <input type="radio" name="projectstatus" value="active" checked="checked">Active
+                        <input type="radio" name="projectstatus" value="inactive">Inactive
+            <dd><input type="submit" value=Register>
+        </dl>
+    </form>
+
+    <form action="{{ url_for('update_project') }}" methods=post>
+        <dl class=gray02>
+            {% for entry in entries %}
+                <dt>{{ entry.projectname }}</dt>
+                <dd>Project name: <input type="text" name="projectname[]" placeholder={{ entry.projectname }} ></dd>
+                <dd>Project ID:   <input type="text" name="projectid[]" placeholder={{ entry.projectid }} ><input type="hidden" name="_id[]" value={{ entry._id }}></dd>
+                <dd>Description:  <input type="text" name="projectdesc[]" placeholder={{ entry.projectdesc }}></dd>
+                {% if entry.projectstatus == "active" %}
+                <dd><select name="projectstatus[]" size="2">
+                    <option value="active" selected>Active</option>
+                    <option value="inactive">Inactive</option>
+                </select></dd>
+                {% else %}
+                <dd><select name="projectstatus[]" size="2">
+                    <option value="active">Active</option>
+                    <option value="inactive" selected>Inactive</option>
+                </select></dd>
+                {% endif %}
+            {% else %}
+                <dt>No entries.</dt>
+                <dd>Please add a project.</dd>
+            {% endfor %}
+        </dl>
+        <input type=submit value=Update>
+    </form>
+{% endblock %}
